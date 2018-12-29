@@ -15,8 +15,6 @@ environment:
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu1604
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
-          CONAN_VISUAL_VERSIONS: 12
-        - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
           CONAN_VISUAL_VERSIONS: 14
         - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
           CONAN_VISUAL_VERSIONS: 15
@@ -25,7 +23,7 @@ environment:
 install:
   - cmd: set PATH=%PATH%;%PYTHON%/Scripts/
   - sh: sudo apt-get install libncurses-dev
-  - pip install conan_package_tools --upgrade
+  - pip install --user conan_package_tools --upgrade
   - conan user # It creates the conan data directory
 
 test_script:
