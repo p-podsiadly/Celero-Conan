@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake
-from conans.tools import download, unzip, os_info, SystemPackageTool
+from conans.tools import download, unzip, replace_in_file, os_info, SystemPackageTool
 import shutil
 
 class CeleroConan(ConanFile):
@@ -21,6 +21,10 @@ class CeleroConan(ConanFile):
         unzip(zip_name)
 
         shutil.move("Celero-%s" % self.version, "Celero")
+
+        replace_in_file(file_path="Celero/CMakeLists.txt",
+                search="PROJECT(CeleroProject)",
+                replace="PROJECT(CeleroProject)\ninclude(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)\nconan_basic_setup()\n")
 
     def requirements(self):
 
@@ -59,9 +63,6 @@ class CeleroConan(ConanFile):
         if not self.options.shared:
             self.cpp_info.defines = ["CELERO_STATIC"]
 
-        if self.settings.build_type == "Debug":
-            self.cpp_info.libs = ["celerod"]
-        else:
-            self.cpp_info.libs = ["celero"]
+        self.cpp_info.libs = ["celerod"] if self.settings.build_type == "Debug" else ["celero"]
 
         self.cpp_info.libdirs = ["lib","lib/static","bin"]
