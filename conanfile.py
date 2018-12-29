@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake
-from conans.tools import download, unzip, replace_in_file, os_info, SystemPackageTool
+from conans.tools import download, check_sha256, unzip, replace_in_file, os_info, SystemPackageTool
 import shutil
 
 class CeleroConan(ConanFile):
@@ -18,13 +18,24 @@ class CeleroConan(ConanFile):
         zip_name = "v%s.zip" % self.version
 
         download("https://github.com/DigitalInBlue/Celero/archive/%s" % zip_name, zip_name)
+
+        check_sha256(zip_name, "ff39642b0d14fef3eb70afb7154b9393a9b8e12c333aeeb109db1a9c0d762a7c")
+
         unzip(zip_name)
 
         shutil.move("Celero-%s" % self.version, "Celero")
 
+        # Add call to conan_basic_setup() at the beginning of CMakeLists.txt
+        # This is needed in order to make Visual Studio use the correct runtime
         replace_in_file(file_path="Celero/CMakeLists.txt",
                 search="PROJECT(CeleroProject)",
                 replace="PROJECT(CeleroProject)\ninclude(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)\nconan_basic_setup()\n")
+
+        # Replace _declspec (single underscore) with __declspec (double underscore)
+        # Needed by MinGW
+        replace_in_file(file_path="Celero/include/celero/Export.h",
+                        search="_declspec",
+                        replace="__declspec")
 
     def requirements(self):
 
