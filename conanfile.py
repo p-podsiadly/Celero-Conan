@@ -57,7 +57,7 @@ class CeleroConan(ConanFile):
     def package_info(self):
 
         if not self.options.shared:
-            self.cpp_info.defines.append("CELERO_STATIC")
+            self.cpp_info.defines = ["CELERO_STATIC"]
 
         if self.settings.build_type == "Debug":
             self.cpp_info.libs = ["celerod"]
