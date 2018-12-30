@@ -52,6 +52,13 @@ class CeleroConan(ConanFile):
             installer = SystemPackageTool()
             installer.install(ncurses_pkg)
 
+    def configure(self):
+
+        if self.settings.compiler == "Visual Studio" and self.settings.compiler.version < "14":
+            raise ConanException("Visual Studio >= 14 (2015) is required")
+        elif self.settings.os == "Windows" and self.settings.compiler == "gcc":
+            raise ConanException("MinGW is not supported")
+
     def build(self):
         cmake = CMake(self)
 
