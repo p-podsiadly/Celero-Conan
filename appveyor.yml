@@ -11,6 +11,8 @@ environment:
     VS150COMNTOOLS: "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\Common7\\Tools\\"
     CONAN_UPLOAD: "https://api.bintray.com/conan/ppodsiadly/conan"
     CONAN_REMOTES: "https://api.bintray.com/conan/ppodsiadly/conan"
+    CONAN_STABLE_BRANCH_PATTERN: "release/*"
+    CONAN_UPLOAD_ONLY_WHEN_STABLE: 1 # Will only upload when the branch matches "release/*"
 
     matrix:
         - APPVEYOR_BUILD_WORKER_IMAGE: Ubuntu1804
