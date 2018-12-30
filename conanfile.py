@@ -31,11 +31,12 @@ class CeleroConan(ConanFile):
                 search="PROJECT(CeleroProject)",
                 replace="PROJECT(CeleroProject)\ninclude(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)\nconan_basic_setup()\n")
 
-        # Replace _declspec (single underscore) with __declspec (double underscore)
-        # Needed by MinGW
-        replace_in_file(file_path="Celero/include/celero/Export.h",
-                        search="_declspec",
-                        replace="__declspec")
+    def configure(self):
+
+        if self.settings.compiler == "Visual Studio" and int(str(self.settings.compiler.version)) < 14:
+            raise ConanException("Visual Studio >= 14 (2015) is required")
+        elif self.settings.os == "Windows" and self.settings.compiler == "gcc":
+            raise ConanException("MinGW is not supported")
 
     def requirements(self):
 
@@ -51,13 +52,6 @@ class CeleroConan(ConanFile):
         if ncurses_pkg:
             installer = SystemPackageTool()
             installer.install(ncurses_pkg)
-
-    def configure(self):
-
-        if self.settings.compiler == "Visual Studio" and self.settings.compiler.version < "14":
-            raise ConanException("Visual Studio >= 14 (2015) is required")
-        elif self.settings.os == "Windows" and self.settings.compiler == "gcc":
-            raise ConanException("MinGW is not supported")
 
     def build(self):
         cmake = CMake(self)
@@ -84,3 +78,5 @@ class CeleroConan(ConanFile):
         self.cpp_info.libs = ["celerod"] if self.settings.build_type == "Debug" else ["celero"]
 
         self.cpp_info.libdirs = ["lib","lib/static","bin"]
+
+        self.copy("Celero/license.txt", dst="licenses", keep_path=False)
