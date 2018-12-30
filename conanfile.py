@@ -1,4 +1,5 @@
 from conans import ConanFile, CMake
+from conans.errors import ConanException
 from conans.tools import download, check_sha256, unzip, replace_in_file, os_info, SystemPackageTool
 import shutil
 
