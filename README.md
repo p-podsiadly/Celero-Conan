@@ -23,6 +23,9 @@ If you handle multiple dependencies in your project is better to add a `conanfil
     
     [generators]
     cmake
+    
+    [imports]
+    bin, *.dll -> ./bin # Copy Celero's DLL from the package to the build directory
 
 Complete the installation of requirements for your project running:
 
