@@ -69,7 +69,10 @@ class CeleroConan(ConanFile):
         cmake.install()
 
     def package(self):
-        self.copy("*", src="package")
+        self.copy("bin/*", keep_path=True)
+        self.copy("lib/*", dst="lib/", keep_path=False)
+        self.copy("include/*", keep_path=True)
+        self.copy("Celero/license.txt", dst="licenses/", keep_path=False)
 
     def package_info(self):
 
@@ -78,6 +81,4 @@ class CeleroConan(ConanFile):
 
         self.cpp_info.libs = ["celerod"] if self.settings.build_type == "Debug" else ["celero"]
 
-        self.cpp_info.libdirs = ["lib","lib/static","bin"]
-
-        self.copy("Celero/license.txt", dst="licenses", keep_path=False)
+        self.cpp_info.libdirs = ["lib", "bin"]
