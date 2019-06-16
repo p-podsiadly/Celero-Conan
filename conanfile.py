@@ -5,7 +5,7 @@ import shutil
 
 class CeleroConan(ConanFile):
     name = "celero"
-    version = "2.4.0"
+    version = "2.5.0"
     license = "Apache License Version 2.0"
     url = "https://github.com/DigitalInBlue/Celero-Conan"
     description = "C++ Benchmark Authoring Library/Framework"
@@ -20,7 +20,7 @@ class CeleroConan(ConanFile):
 
         download("https://github.com/DigitalInBlue/Celero/archive/%s" % zip_name, zip_name)
 
-        check_sha256(zip_name, "ff39642b0d14fef3eb70afb7154b9393a9b8e12c333aeeb109db1a9c0d762a7c")
+        check_sha256(zip_name, "12c8d9cf39ed2d73f6b7c321c9c036d84848e5245c17399c5c9901cb38a5db08")
 
         unzip(zip_name)
 
