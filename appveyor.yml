@@ -25,7 +25,7 @@ environment:
 
 install:
   - cmd: set PATH=%PATH%;%PYTHON%/Scripts/
-  - sh: sudo apt-get update && sudo apt-get -y upgrade
+  - sh: sudo apt-get update
   - sh: sudo apt-get install -y libncurses-dev
   - sh: sudo apt-get install -y g++-4.8 g++-4.8-multilib g++-5 g++-5-multilib g++-6 g++-6-multilib g++-7 g++-7-multilib
   - sh: sudo apt-get install -y clang-3.9 clang-4.0 clang-6.0
