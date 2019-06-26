@@ -9,14 +9,14 @@
 
 ## Basic setup
 
-    $ conan install celero/2.4.0@ppodsiadly/stable
+    $ conan install celero/2.5.0@ppodsiadly/stable
     
 ## Project setup
 
 If you handle multiple dependencies in your project is better to add a `conanfile.txt`:
     
     [requires]
-    celero/2.4.0@ppodsiadly/stable
+    celero/2.5.0@ppodsiadly/stable
 
     [options]
     celero:shared=True # or False, default is True
