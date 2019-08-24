@@ -70,6 +70,7 @@ class CeleroConan(ConanFile):
 
     def package(self):
         self.copy("*", src="package")
+        self.copy("Celero/license.txt", dst="licenses", keep_path=False)
 
     def package_info(self):
 
@@ -79,5 +80,3 @@ class CeleroConan(ConanFile):
         self.cpp_info.libs = ["celerod"] if self.settings.build_type == "Debug" else ["celero"]
 
         self.cpp_info.libdirs = ["lib","lib/static","bin"]
-
-        self.copy("Celero/license.txt", dst="licenses", keep_path=False)
